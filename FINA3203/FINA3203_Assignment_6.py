@@ -45,7 +45,8 @@ def equityMerton(v, f, r, sigma, t): return bsm(1, v, f, r, sigma, t)
     
 def debtMerton(v, f, r, sigma, t):
     if sigma == 0 or t == 0: return v
-    return f*math.exp(-r*t)-bsm(0, v, f, r, sigma, t)
+    return v - equityMerton(v, f, r, sigma, t)
+#     return f*math.exp(-r*t)-bsm(0, v, f, r, sigma, t)
 
 def creditSpread(v, f, r, sigma, t):
     return -(math.log(debtMerton(v/f, 1, r, sigma, t)))/t-r
@@ -83,9 +84,11 @@ print ("Question 1\nThe probability of default EDF = {:.2%}\nThe credit spread =
 # In[4]:
 
 
-print(d1(v, f, mu, sigma, t))
+print(d1(v, f, r, sigma, t))
+print(d2(v, f, r, sigma, t))
 print(d2(v, f, mu, sigma, t))
-print(norm.cdf(-d1(v, f, mu, sigma, t)))
+print(norm.cdf(-d1(v, f, r, sigma, t)))
+print(norm.cdf(d2(v, f, r, sigma, t)))
 print(debtMerton(v, f, mu, sigma, t))
 
 
@@ -128,10 +131,4 @@ b = math.exp(-y*t)*f
 edf_2 = edf(v, f, mu, sigma, t)
 delta = f - bsm(0, v, f, mu, sigma, t) * math.exp(mu*t) / edf(v, f, mu, sigma, t)
 print("\n\nQuestion 3\nThe bond price is ${:.2f}, YTM is {:.2%}, default probability is {:.2%}, expected recovery is ${:.2f}.".format(b, y, edf_2, delta))
-
-
-# In[7]:
-
-
-print(debtMerton(v, f, mu, sigma, t))
 

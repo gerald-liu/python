@@ -1,3 +1,3 @@
-# ipython
+# python
 
-IPython workspace of Gerald Liu
+Python workspace of Gerald Liu

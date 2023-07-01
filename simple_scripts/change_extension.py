@@ -1,6 +1,5 @@
 # python script.py old_ext new_ext
 
-from cgi import print_arguments
 import os
 import sys
 
